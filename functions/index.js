@@ -8,9 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-//get will return if user has liked it.
 app.get('/likes/:postId/:userId', getLikes);
-//post will add their like if not in it. and increase like counter
 app.post('/likes/:postId/:userId', addLikes);
 
 app.get('/photos', getAllPhotos);
