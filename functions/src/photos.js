@@ -46,6 +46,7 @@ export async function addLikes(req, res) {
     
     //if it does remove it
     delete photo.likes[userId]
+    let _likeCount = photo.likeCount
     delete photo.likeCount
 
     //then minus from count
@@ -64,7 +65,7 @@ export async function addLikes(req, res) {
       })
 
 
-      res.send({isLiked:false, likes: photo.likeCount -1})
+      res.send({isLiked:false, likes: _likeCount -1})
       return
   } else {
     //if it doesn't add it
@@ -84,7 +85,8 @@ export async function addLikes(req, res) {
         res.status(500).send({ success: false, message: err });
         return;
       })
-      res.send({isLiked:true, likes: photo.likeCount +1})
+
+      res.send({isLiked:true, likes: _likeCount +1})
       return
   }
 }
@@ -104,7 +106,7 @@ export async function getLikes(req, res) {
 
   const photo = result.data()
   //see if userId exists in like object
-  if (photo.likes.userId) {
+  if (photo.likes[userId]) {
     res.send({isLiked: true, likes: photo.likeCount})
   } else {
     res.send({isLiked: false, likes: photo.likeCount})
